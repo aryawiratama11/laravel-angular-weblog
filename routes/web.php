@@ -11,6 +11,10 @@
 |
 */
 
+Route::get('/', function () {
+    return view('index');
+});
+
 Route::get('/api/v1/blogposts/{id?}', 'BlogPost@index');
 Route::post('/api/v1/blogposts', 'BlogPost@store');
 Route::post('/api/v1/blogposts/{id}', 'BlogPost@update');
