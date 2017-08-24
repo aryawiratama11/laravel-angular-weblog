@@ -11,6 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/api/v1/blogposts/{id?}', 'BlogPost@index');
+Route::post('/api/v1/blogposts', 'BlogPost@store');
+Route::post('/api/v1/blogposts/{id}', 'BlogPost@update');
+Route::delete('/api/v1/blogposts/{id}', 'BlogPost@destroy');
