@@ -27,11 +27,13 @@ class BlogPost extends Controller
      * @return Response
      */
     public function store(Request $request) {
+        //dd($request);
         $post = new \App\BlogPost;
 
         $post->post_title = $request->input('post_title');
         $post->post_body = $request->input('post_body');
         $post->post_author = $request->input('post_author');
+
         if ($request->input('date_posted')) {
             $post->date_posted = $request->input('date_posted');
         }

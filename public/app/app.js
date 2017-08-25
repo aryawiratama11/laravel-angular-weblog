@@ -1,6 +1,3 @@
-var app = angular.module('blogPostRecords', [])
+var app = angular.module('blogPostRecords', ['720kb.datepicker'])
         .constant('API_URL', 'http://localhost/angulara/public/api/v1/');
 
-$( function() {
-    $( ".datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
-} );

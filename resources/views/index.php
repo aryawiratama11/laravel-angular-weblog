@@ -6,13 +6,15 @@
         <!-- Load Bootstrap CSS -->
         <link href="<?= asset('css/bootstrap.min.css') ?>" rel="stylesheet">
         <link href="<?= asset('css/jquery-ui.min.css') ?>" rel="stylesheet">
+        <link href="<?= asset('css/angular-datepicker.css') ?>" rel="stylesheet">
     </head>
     <body>
-        <h2>Posts Database</h2>
+    <div class="col-md-8">
+        <h2>Weblog Posts</h2>
         <div  ng-controller="postsController">
 
             <!-- Table-to-load-the-data Part -->
-            <table class="table">
+            <table class="table table-hover ">
                 <thead>
                     <tr>
                         
@@ -26,11 +28,11 @@
                 <tbody>
                     <tr ng-repeat="post in posts">
                        
-                        <td>{{ post.post_title }}</td>
-                        <td>{{ post.post_body }}</td>
-                        <td>{{ post.post_author }}</td>
-                        <td>{{ post.date_posted }}</td>
-                        <td>
+                        <td class="col-md-2">{{ post.post_title }}</td>
+                        <td class="col-md-4">{{ post.post_body }}</td>
+                        <td class="col-md-2">{{ post.post_author }}</td>
+                        <td class="col-md-2">{{ post.date_posted }}</td>
+                        <td class="col-md-2">
                             <button class="btn btn-default btn-xs btn-detail" ng-click="toggle('edit', post.id)">Edit</button>
                             <button class="btn btn-danger btn-xs btn-delete" ng-click="confirmDelete(post.id)">Delete</button>
                         </td>
@@ -43,7 +45,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">X</span></button>
                             <h4 class="modal-title" id="myModalLabel">{{form_title}}</h4>
                         </div>
                         <div class="modal-body">
@@ -62,8 +64,10 @@
                                 <div class="form-group">
                                     <label for="post_body" class="col-sm-3 control-label">Post Body</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="post_body" name="post_body" placeholder="post body" value="{{post_body}}" 
-                                        ng-model="post.post_body" >
+                                   <!--     <input type="text" class="form-control" id="post_body" name="post_body" placeholder="post body" value="{{post_body}}"
+                                        ng-model="post.post_body" >-->
+                                        <textarea class="form-control" rows="5" id="post_body" name="post_body" placeholder="post body" value="{{post_body}}"
+                                                  ng-model="post.post_body"></textarea>
                                         <span class="help-inline" 
                                         ng-show="frmPosts.post_body.$invalid && frmPosts.post_body.$touched">post body field is required</span>
                                     </div>
@@ -82,9 +86,13 @@
                                 <div class="form-group">
                                     <label for="date_posted" class="col-sm-3 control-label">Date Posted</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control datepicker" id="date_posted" name="date_posted" placeholder="date posted" value="{{date_posted}}"
-                                        ng-model="post.date_posted">
-                                </div>
+                                       <!-- <input type="text" class="form-control datepicker" id="date_posted" name="date_posted" placeholder="date posted" value="{{date_posted}}"
+                                        ng-model="post.date_posted">-->
+                                        <datepicker date-format="yyyy-MM-dd">
+                                            <input  type="text" class="form-control" id="date_posted" name="date_posted" placeholder="date posted" value="{{date_posted}}" ng-model="post.date_posted" />
+                                        </datepicker>
+
+                                 </div>
 
                             </form>
                         </div>
@@ -96,12 +104,14 @@
             </div>
         </div>
 
+    </div>
+
         <!-- Load Javascript Libraries (AngularJS, JQuery, Bootstrap) -->
         <script src="<?= asset('app/lib/angular/angular.min.js') ?>"></script>
         <script src="<?= asset('js/jquery.min.js') ?>"></script>
-        <script src="<?= asset('js/jquery-ui.js') ?>"></script>
         <script src="<?= asset('js/bootstrap.min.js') ?>"></script>
-        
+        <script src="<?= asset('js/angular-datepicker.js') ?>"></script>
+
         <!-- AngularJS Application Scripts -->
         <script src="<?= asset('app/app.js') ?>"></script>
         <script src="<?= asset('app/controllers/blogposts.js') ?>"></script>

@@ -77,4 +77,6 @@ app.controller('postsController', function($scope, $http, API_URL) {
             return false;
         }
     }
+
+
 });
