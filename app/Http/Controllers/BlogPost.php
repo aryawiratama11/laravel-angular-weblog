@@ -14,7 +14,7 @@ class BlogPost extends Controller
      */
     public function index($id = null) {
         if ($id == null) {
-            return BlogPost::orderBy('id', 'asc')->get();
+            return \App\BlogPost::all();
         } else {
             return $this->show($id);
         }
@@ -27,12 +27,17 @@ class BlogPost extends Controller
      * @return Response
      */
     public function store(Request $request) {
-        $post = new BlogPost;
+        $post = new \App\BlogPost;
 
         $post->post_title = $request->input('post_title');
         $post->post_body = $request->input('post_body');
         $post->post_author = $request->input('post_author');
-        $post->date_posted = $request->input('date_posted');
+        if ($request->input('date_posted')) {
+            $post->date_posted = $request->input('date_posted');
+        }
+        else{
+            $post->date_posted = date('Y-m-d');
+        }
         $post->save();
 
         return 'Blog post record successfully created with id ' . $post->id;
@@ -45,7 +50,7 @@ class BlogPost extends Controller
      * @return Response
      */
     public function show($id) {
-        return BlogPost::find($id);
+        return \App\BlogPost::find($id);
     }
 
     /**
@@ -56,7 +61,7 @@ class BlogPost extends Controller
      * @return Response
      */
     public function update(Request $request, $id) {
-        $post = BlogPost::find($id);
+        $post = \App\BlogPost::find($id);
 
         $post->post_title = $request->input('post_title');
         $post->post_body = $request->input('post_body');
@@ -74,7 +79,7 @@ class BlogPost extends Controller
      * @return Response
      */
     public function destroy(Request $request) {
-        $post = BlogPost::find($request->input('id'));
+        $post = \App\BlogPost::find($request->input('id'));
 
         $post->delete();
 

@@ -1,7 +1,6 @@
 app.controller('postsController', function($scope, $http, API_URL) {
     //retrieve posts listing from API
-    $http.get(API_URL + "posts")
-            .success(function(response) {
+    $http.get(API_URL + "blogposts").success(function(response) {
                 $scope.posts = response;
             });
     
@@ -16,7 +15,7 @@ app.controller('postsController', function($scope, $http, API_URL) {
             case 'edit':
                 $scope.form_title = "Post Detail";
                 $scope.id = id;
-                $http.get(API_URL + 'posts/' + id)
+                $http.get(API_URL + 'blogposts/' + id)
                         .success(function(response) {
                             console.log(response);
                             $scope.post = response;
@@ -31,9 +30,9 @@ app.controller('postsController', function($scope, $http, API_URL) {
 
     //save new record / update existing record
     $scope.save = function(modalstate, id) {
-        var url = API_URL + "posts";
+        var url = API_URL + "blogposts";
         
-        //append employee id to the URL if the form is in edit mode
+        //append post id to the URL if the form is in edit mode
         if (modalstate === 'edit'){
             url += "/" + id;
         }
@@ -44,11 +43,15 @@ app.controller('postsController', function($scope, $http, API_URL) {
             data: $.param($scope.post),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function(response) {
-            console.log(response);
-            location.reload();
+            //console.log(response);
+            $('#myModal').modal('hide');
+            $http.get(API_URL + "blogposts").success(function(response) {
+                $scope.posts = response;
+            });
+            //location.reload();
         }).error(function(response) {
-            console.log(response);
-            alert('Embarassing! An error has occured. Please check the log for details');
+            //console.log(response);
+            alert('Embarrassing! An error has occurred.');
         });
     }
 
@@ -58,14 +61,12 @@ app.controller('postsController', function($scope, $http, API_URL) {
         if (isConfirmDelete) {
             $http({
                 method: 'DELETE',
-                url: API_URL + 'posts/' + id
-            }).
-                    success(function(data) {
-                        console.log(data);
+                url: API_URL + 'blogposts/' + id
+            }).success(function(data) {
+                        //console.log(data);
                         location.reload();
-                    }).
-                    error(function(data) {
-                        console.log(data);
+                    }).error(function(data) {
+                        //console.log(data);
                         alert('Unable to delete');
                     });
         } else {

@@ -5,6 +5,7 @@
 
         <!-- Load Bootstrap CSS -->
         <link href="<?= asset('css/bootstrap.min.css') ?>" rel="stylesheet">
+        <link href="<?= asset('css/jquery-ui.min.css') ?>" rel="stylesheet">
     </head>
     <body>
         <h2>Posts Database</h2>
@@ -81,11 +82,8 @@
                                 <div class="form-group">
                                     <label for="date_posted" class="col-sm-3 control-label">Date Posted</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="date_posted" name="date_posted" placeholder="date posted" value="{{date_posted}}" 
-                                        ng-model="employee.position" ng-required="true">
-                                    <span class="help-inline" 
-                                        ng-show="frmPosts.date_posted.$invalid && frmPosts.date_posted.$touched">date posted field is required</span>
-                                    </div>
+                                        <input type="text" class="form-control datepicker" id="date_posted" name="date_posted" placeholder="date posted" value="{{date_posted}}"
+                                        ng-model="post.date_posted">
                                 </div>
 
                             </form>
@@ -101,6 +99,7 @@
         <!-- Load Javascript Libraries (AngularJS, JQuery, Bootstrap) -->
         <script src="<?= asset('app/lib/angular/angular.min.js') ?>"></script>
         <script src="<?= asset('js/jquery.min.js') ?>"></script>
+        <script src="<?= asset('js/jquery-ui.js') ?>"></script>
         <script src="<?= asset('js/bootstrap.min.js') ?>"></script>
         
         <!-- AngularJS Application Scripts -->
