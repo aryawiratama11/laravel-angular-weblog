@@ -53,7 +53,7 @@
                                     <label for="inputEmail3" class="col-sm-3 control-label">Post Title</label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control has-error" id="post_title" name="post_title" placeholder="post title" value="{{post_title}}" 
-                                        ng-model="post.post_title" ng-required="true">
+                                        ng-model="post.post_title">
                                         <span class="help-inline" 
                                         ng-show="frmPosts.post_title.$invalid && frmPosts.post_title.$touched">post title is required</span>
                                     </div>
@@ -63,7 +63,7 @@
                                     <label for="post_body" class="col-sm-3 control-label">Post Body</label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" id="post_body" name="post_body" placeholder="post body" value="{{post_body}}" 
-                                        ng-model="post.post_body" ng-required="true">
+                                        ng-model="post.post_body" >
                                         <span class="help-inline" 
                                         ng-show="frmPosts.post_body.$invalid && frmPosts.post_body.$touched">post body field is required</span>
                                     </div>
@@ -73,7 +73,7 @@
                                     <label for="post_author" class="col-sm-3 control-label">Post Author</label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" id="post_author" name="post_author" placeholder="post author" value="{{post_author}}" 
-                                        ng-model="post.post_author" ng-required="true">
+                                        ng-model="post.post_author" >
                                     <span class="help-inline" 
                                         ng-show="frmPosts.post_author.$invalid && frmPosts.post_author.$touched">post author field is required</span>
                                     </div>

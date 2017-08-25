@@ -78,12 +78,12 @@ class BlogPost extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy(Request $request) {
-        $post = \App\BlogPost::find($request->input('id'));
+    public function destroy(Request $request, $id) {
+        $post = \App\BlogPost::find($id);
 
         $post->delete();
 
-        return "Blog post record successfully deleted #" . $request->input('id');
+        return "Blog post record successfully deleted #" . $id;
     }
 
 }

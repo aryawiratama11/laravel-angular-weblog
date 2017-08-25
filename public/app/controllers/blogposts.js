@@ -11,6 +11,7 @@ app.controller('postsController', function($scope, $http, API_URL) {
         switch (modalstate) {
             case 'add':
                 $scope.form_title = "Add New Post";
+                $scope.post = ''
                 break;
             case 'edit':
                 $scope.form_title = "Post Detail";
@@ -36,7 +37,7 @@ app.controller('postsController', function($scope, $http, API_URL) {
         if (modalstate === 'edit'){
             url += "/" + id;
         }
-        
+
         $http({
             method: 'POST',
             url: url,
@@ -64,7 +65,10 @@ app.controller('postsController', function($scope, $http, API_URL) {
                 url: API_URL + 'blogposts/' + id
             }).success(function(data) {
                         //console.log(data);
-                        location.reload();
+                        //location.reload();
+                        $http.get(API_URL + "blogposts").success(function(response) {
+                            $scope.posts = response;
+                        });
                     }).error(function(data) {
                         //console.log(data);
                         alert('Unable to delete');
