@@ -9,25 +9,28 @@
         <link href="<?= asset('css/angular-datepicker.css') ?>" rel="stylesheet">
     </head>
     <body>
-    <div class="col-md-8">
+    <div class="col-md-8" ng-controller="postsController">
         <h2>Weblog Posts</h2>
-        <div  ng-controller="postsController">
+        <button class="btn btn-danger btn-xs" ng-click="deleteAll()">Delete Selected Post/s</button>
+        <div>
 
             <!-- Table-to-load-the-data Part -->
             <table class="table table-hover ">
                 <thead>
                     <tr>
-                        
+                        <th><input type="checkbox" id="master"></th>
                         <th>Post Title</th>
                         <th>Post Body</th>
                         <th>Post Author</th>
                         <th>Date Posted</th>
-                        <th><button id="btn-add" class="btn btn-primary btn-xs" ng-click="toggle('add', 0)">Add New Post</button></th>
+                        <th>
+                            <button id="btn-add" class="btn btn-primary btn-xs" ng-click="toggle('add', 0)">Add New Post</button>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="post in posts">
-                       
+                        <td><input type="checkbox" class="sub_chk" data-id="{{post.id}}"></td>
                         <td class="col-md-2">{{ post.post_title }}</td>
                         <td class="col-md-4">{{ post.post_body }}</td>
                         <td class="col-md-2">{{ post.post_author }}</td>

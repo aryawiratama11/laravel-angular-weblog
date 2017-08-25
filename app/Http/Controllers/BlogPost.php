@@ -33,13 +33,8 @@ class BlogPost extends Controller
         $post->post_title = $request->input('post_title');
         $post->post_body = $request->input('post_body');
         $post->post_author = $request->input('post_author');
+        $post->date_posted = $request->input('date_posted');
 
-        if ($request->input('date_posted')) {
-            $post->date_posted = $request->input('date_posted');
-        }
-        else{
-            $post->date_posted = date('Y-m-d');
-        }
         $post->save();
 
         return 'Blog post record successfully created with id ' . $post->id;
@@ -80,12 +75,19 @@ class BlogPost extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy(Request $request, $id) {
+    public function destroy($id) {
         $post = \App\BlogPost::find($id);
-
         $post->delete();
-
         return "Blog post record successfully deleted #" . $id;
+    }
+
+
+    public function deleteAll($ids)
+
+    {
+        //dd(explode(",",$ids));
+        \App\BlogPost::whereIn('id',explode(",",$ids))->delete();
+        return response()->json(['success'=>"Posts Deleted successfully."]);
     }
 
 }
