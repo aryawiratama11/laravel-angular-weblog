@@ -85,7 +85,6 @@ class BlogPost extends Controller
     public function deleteAll($ids)
 
     {
-        //dd(explode(",",$ids));
         \App\BlogPost::whereIn('id',explode(",",$ids))->delete();
         return response()->json(['success'=>"Posts Deleted successfully."]);
     }
