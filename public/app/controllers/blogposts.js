@@ -1,11 +1,11 @@
-app.controller('postsController', function($scope, $http, API_URL) {
+app.controller('postsController', function ($scope, $http, API_URL) {
     //retrieve posts listing from API
-    $http.get(API_URL + "blogposts").success(function(response) {
-                $scope.posts = response;
-            });
-    
+    $http.get(API_URL + "blogposts").success(function (response) {
+        $scope.posts = response;
+    });
+
     //show modal form
-    $scope.toggle = function(modalstate, id) {
+    $scope.toggle = function (modalstate, id) {
         $scope.modalstate = modalstate;
 
         switch (modalstate) {
@@ -17,24 +17,23 @@ app.controller('postsController', function($scope, $http, API_URL) {
                 $scope.form_title = "Post Detail";
                 $scope.id = id;
                 $http.get(API_URL + 'blogposts/' + id)
-                        .success(function(response) {
-                            console.log(response);
-                            $scope.post = response;
-                        });
+                    .success(function (response) {
+                        $scope.post = response;
+                    });
                 break;
             default:
                 break;
         }
-        console.log(id);
+
         $('#myModal').modal('show');
     }
 
     //save new record / update existing record
-    $scope.save = function(modalstate, id) {
+    $scope.save = function (modalstate, id) {
         var url = API_URL + "blogposts";
-        
+
         //append post id to the URL if the form is in edit mode
-        if (modalstate === 'edit'){
+        if (modalstate === 'edit') {
             url += "/" + id;
         }
 
@@ -43,77 +42,73 @@ app.controller('postsController', function($scope, $http, API_URL) {
             url: url,
             data: $.param($scope.post),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        }).success(function(response) {
-            //console.log(response);
-            $('#myModal').modal('hide');
-            $http.get(API_URL + "blogposts").success(function(response) {
-                $scope.posts = response;
-            });
+        }).success(function (response) {
+            if (response.messages) {
+                //show validation message in span
+                $scope.errors = response.messages;
+            }
+            else {
+                $('#myModal').modal('hide');
+                $http.get(API_URL + "blogposts").success(function (response) {
+                    $scope.posts = response;
+                    $scope.errors = '';
+                });
+            }
 
-        }).error(function(response) {
-            //console.log(response);
-            alert('Embarrassing! An error has occurred.');
+        }).error(function () {
+            alert('An error has occurred.');
         });
     }
 
     //delete record
-    $scope.confirmDelete = function(id) {
+    $scope.confirmDelete = function (id) {
         var isConfirmDelete = confirm('Are you sure you want to delete this post?');
         if (isConfirmDelete) {
             $http({
                 method: 'DELETE',
                 url: API_URL + 'blogposts/' + id
-            }).success(function(data) {
-                        $http.get(API_URL + "blogposts").success(function(response) {
-                            $scope.posts = response;
-                        });
-                    }).error(function(data) {
-                        //console.log(data);
-                        alert('Unable to delete');
-                    });
+            }).success(function (data) {
+                $http.get(API_URL + "blogposts").success(function (response) {
+                    $scope.posts = response;
+                });
+            }).error(function (data) {
+                alert('Unable to delete');
+            });
         } else {
             return false;
         }
     }
 
-    $scope.deleteAll = function() {
+    $scope.deleteAll = function () {
         var allVals = [];
 
-        $(".sub_chk:checked").each(function() {
-
+        $(".sub_chk:checked").each(function () {
             allVals.push($(this).attr('data-id'));
-
         });
 
-
-        if(allVals.length <=0)
-
-        {
-
+        if (allVals.length <= 0) {
             alert("Please select a post.");
-
-        }  else {
-
+        } else {
 
             var check = confirm("Are you sure you want to delete the post(s)?");
-
-            if(check == true){
-
+            if (check == true) {
 
                 var join_selected_values = allVals.join(",");
-                var delurl = API_URL + "blogposts/deleteAll/"+join_selected_values;
-                console.log(join_selected_values);
+                var delBatchUrl = API_URL + "blogposts/deleteAll/" + join_selected_values;
 
                 $http({
                     method: 'DELETE',
-                    url: delurl,
-                    //data: 'ids='+join_selected_values,
-                }).success(function(data) {
+                    url: delBatchUrl,
+                }).success(function (data) {
 
-                    $http.get(API_URL + "blogposts").success(function(response) {
+                    $http.get(API_URL + "blogposts").success(function (response) {
                         $scope.posts = response;
+                        $scope.delmessage='Selected posts were deleted successfully!';
+                        setTimeout(function() {
+                            $('#delmessage').fadeOut('fast');
+                        }, 2000);
                     });
-                }).error(function(data) {
+                }).error(function (data) {
                     //console.log(data);
                     alert('Unable to delete');
                 });
@@ -123,17 +118,15 @@ app.controller('postsController', function($scope, $http, API_URL) {
     }
 
 
-    $('#master').on('click', function(e) {
+    $('#master').on('click', function (e) {
 
-        if($(this).is(':checked',true))
-
-        {
+        if ($(this).is(':checked', true)) {
 
             $(".sub_chk").prop('checked', true);
 
         } else {
 
-            $(".sub_chk").prop('checked',false);
+            $(".sub_chk").prop('checked', false);
 
         }
 
