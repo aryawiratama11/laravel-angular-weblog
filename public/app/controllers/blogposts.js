@@ -58,7 +58,7 @@ app.controller('postsController', function($scope, $http, API_URL) {
 
     //delete record
     $scope.confirmDelete = function(id) {
-        var isConfirmDelete = confirm('Are you sure you want this post?');
+        var isConfirmDelete = confirm('Are you sure you want to delete this post?');
         if (isConfirmDelete) {
             $http({
                 method: 'DELETE',
@@ -95,7 +95,7 @@ app.controller('postsController', function($scope, $http, API_URL) {
         }  else {
 
 
-            var check = confirm("Are you sure you want to delete this post?");
+            var check = confirm("Are you sure you want to delete the post(s)?");
 
             if(check == true){
 
